@@ -125,4 +125,14 @@ class HeroServiceTest {
         Mockito.verify(heroRepository).findById(Mockito.anyLong());
     }
 
+    @Test
+    void shouldThrowHeroNotFoundExceptionOnDelete() {
+        // Given
+        Mockito.when(heroRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+
+        // When/Then
+        assertThrows(NotFoundException.class, () -> heroService.deleteHero(1L));
+        Mockito.verify(heroRepository).findById(Mockito.anyLong());
+    }
+
 }
