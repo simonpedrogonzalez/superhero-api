@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.dtos.UpdateHeroDTO;
+import com.example.demo.exceptions.HeroNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.domain.repositories.HeroRepository;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @ExtendWith(MockitoExtension.class)
 class HeroServiceTest {
 
@@ -108,6 +111,18 @@ class HeroServiceTest {
         // Then
         assertThat(deletedHero).isEqualTo(heroToDelete);
         Mockito.verify(heroRepository).delete(heroToDelete);
+    }
+
+    @Test
+    void shouldThrowHeroNotFoundExceptionOnUpdate() {
+        // Given
+        Long heroId = 1L;
+        UpdateHeroDTO updateHeroDTO = new UpdateHeroDTO("Spiderman");
+        Mockito.when(heroRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+
+        // When/Then
+        assertThrows(NotFoundException.class, () -> heroService.updateHero(heroId, updateHeroDTO));
+        Mockito.verify(heroRepository).findById(Mockito.anyLong());
     }
 
 }
