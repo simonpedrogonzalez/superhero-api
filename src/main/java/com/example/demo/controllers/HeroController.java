@@ -36,4 +36,9 @@ public class HeroController {
     public ResponseEntity<Hero> updateHero(@PathVariable Long heroId, @RequestBody @Valid UpdateHeroDTO updateHeroDTO) {
         return new ResponseEntity<>(heroService.updateHero(heroId, updateHeroDTO), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{heroId}")
+    public ResponseEntity<Hero> deleteHero(@PathVariable Long heroId) {
+        return new ResponseEntity<>(heroService.deleteHero(heroId), HttpStatus.OK);
+    }
 }

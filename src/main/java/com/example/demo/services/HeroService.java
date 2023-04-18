@@ -36,4 +36,13 @@ public class HeroService {
                 })
                 .orElseThrow(() -> new RuntimeException("Not Found"));
     }
+
+    public Hero deleteHero(Long heroId) {
+        return heroRepository.findById(heroId)
+                .map(hero -> {
+                    heroRepository.delete(hero);
+                    return hero;
+                })
+                .orElseThrow(() -> new RuntimeException("Not Found"));
+    }
 }
