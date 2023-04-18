@@ -95,4 +95,19 @@ class HeroServiceTest {
         Mockito.verify(heroRepository).findById(heroId);
         Mockito.verify(heroRepository).save(Mockito.any(Hero.class));
     }
+
+    @Test
+    void shouldDeleteHero() {
+        // Given
+        Hero heroToDelete = new Hero(1L, "Spiderman");
+        Mockito.when(heroRepository.findById(1L)).thenReturn(Optional.of(heroToDelete));
+
+        // When
+        Hero deletedHero = heroService.deleteHero(1L);
+
+        // Then
+        assertThat(deletedHero).isEqualTo(heroToDelete);
+        Mockito.verify(heroRepository).delete(heroToDelete);
+    }
+
 }
