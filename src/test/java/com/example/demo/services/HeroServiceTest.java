@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.dtos.UpdateHeroDTO;
-import com.example.demo.exceptions.HeroNotFoundException;
+import com.example.demo.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

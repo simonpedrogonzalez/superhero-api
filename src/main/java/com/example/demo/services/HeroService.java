@@ -4,6 +4,8 @@ import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.dtos.UpdateHeroDTO;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.domain.repositories.HeroRepository;
+import com.example.demo.exceptions.NotFoundException;
+import com.example.demo.exceptions.models.Problems;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class HeroService {
                     hero.setName(updateHeroDTO.getName());
                     return heroRepository.save(hero);
                 })
-                .orElseThrow(() -> new RuntimeException("Not Found"));
+                .orElseThrow(() -> new NotFoundException(Problems.HERO_NOT_FOUND));
     }
 
     public Hero deleteHero(Long heroId) {
