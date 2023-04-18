@@ -37,4 +37,9 @@ public class Hero {
     public Hero(String name) {
         this.name = name;
     }
+
+    public Hero(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

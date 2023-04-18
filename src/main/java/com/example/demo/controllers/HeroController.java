@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.dtos.CreateHeroDTO;
+import com.example.demo.domain.dtos.UpdateHeroDTO;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.services.HeroService;
 import jakarta.validation.Valid;
@@ -29,5 +30,10 @@ public class HeroController {
     @PostMapping
     public ResponseEntity<Hero> createHero(@RequestBody @Valid CreateHeroDTO createHeroDTO) {
         return new ResponseEntity<>(heroService.createHero(createHeroDTO), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{heroId}")
+    public ResponseEntity<Hero> updateHero(@PathVariable Long heroId, @RequestBody @Valid UpdateHeroDTO updateHeroDTO) {
+        return new ResponseEntity<>(heroService.updateHero(heroId, updateHeroDTO), HttpStatus.OK);
     }
 }

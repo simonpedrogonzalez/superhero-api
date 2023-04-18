@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.domain.dtos.CreateHeroDTO;
+import com.example.demo.domain.dtos.UpdateHeroDTO;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.domain.repositories.HeroRepository;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,14 @@ public class HeroService {
 
     public Hero createHero(CreateHeroDTO createHeroDTO) {
         return heroRepository.save(new Hero(createHeroDTO.getName()));
+    }
+
+    public Hero updateHero(Long heroId, UpdateHeroDTO updateHeroDTO) {
+        return heroRepository.findById(heroId)
+                .map(hero -> {
+                    hero.setName(updateHeroDTO.getName());
+                    return heroRepository.save(hero);
+                })
+                .orElseThrow(() -> new RuntimeException("Not Found"));
     }
 }
