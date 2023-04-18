@@ -59,4 +59,19 @@ class HeroServiceTest {
         assertThat(result).containsExactlyElementsOf(heroes);
         Mockito.verify(heroRepository).findByNameContainingIgnoreCase(searchTerm);
     }
+
+    @Test
+    void shouldCreateHero() {
+        // Given
+        Hero hero = new Hero(1L, "Ironman");
+        CreateHeroDTO createHeroDTO = new CreateHeroDTO("Ironman");
+        Mockito.when(heroRepository.save(hero)).thenReturn(hero);
+
+        // When
+        Hero result = heroService.createHero(createHeroDTO);
+
+        // Then
+        assertThat(result).isEqualTo(hero);
+        Mockito.verify(heroRepository).save(hero);
+    }
 }
