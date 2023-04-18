@@ -1,5 +1,8 @@
+package com.example.demo.services;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,10 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.Assertions;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.domain.repositories.HeroRepository;
-import com.example.demo.services.HeroService;
 import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 class HeroServiceTest {
@@ -32,7 +33,7 @@ class HeroServiceTest {
         Mockito.when(heroRepository.findAll()).thenReturn(heroes);
 
         // When
-        List<Hero> result = heroService.getHeroes();
+        List<Hero> result = heroService.getHeroes(Optional.empty());
 
         // Then
         assertThat(result).containsExactlyElementsOf(heroes);
@@ -52,7 +53,7 @@ class HeroServiceTest {
         Mockito.when(heroRepository.findByNameContainingIgnoreCase(searchTerm)).thenReturn(heroes);
 
         // When
-        List<Hero> result = heroService.getHeroes(searchTerm);
+        List<Hero> result = heroService.getHeroes(Optional.of(searchTerm));
 
         // Then
         assertThat(result).containsExactlyElementsOf(heroes);

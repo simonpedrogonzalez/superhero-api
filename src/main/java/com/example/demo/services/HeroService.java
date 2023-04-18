@@ -5,6 +5,7 @@ import com.example.demo.domain.repositories.HeroRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HeroService {
@@ -15,7 +16,9 @@ public class HeroService {
         this.heroRepository = heroRepository;
     }
 
-    public List<Hero> getAllHeroes() {
-        return heroRepository.findAll();
+    public List<Hero> getHeroes(Optional<String> searchTerm) {
+        return searchTerm
+                .map((q) -> heroRepository.findByNameContainingIgnoreCase(q))
+                .orElseGet(() -> heroRepository.findAll());
     }
 }
