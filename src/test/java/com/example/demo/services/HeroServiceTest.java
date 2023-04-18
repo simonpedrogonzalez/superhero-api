@@ -32,10 +32,30 @@ class HeroServiceTest {
         Mockito.when(heroRepository.findAll()).thenReturn(heroes);
 
         // When
-        List<Hero> result = heroService.getAllHeroes();
+        List<Hero> result = heroService.getHeroes();
 
         // Then
         assertThat(result).containsExactlyElementsOf(heroes);
         Mockito.verify(heroRepository).findAll();
+    }
+
+    @Test
+    void shouldReturnAllHeroesContaining() {
+        // Given
+        String searchTerm = "man";
+        List<Hero> heroes = Arrays.asList(
+                new Hero(1L, "Superman"),
+                new Hero(2L, "Spiderman"),
+                new Hero(3L, "Manolito el fuerte")
+        );
+
+        Mockito.when(heroRepository.findByNameContainingIgnoreCase(searchTerm)).thenReturn(heroes);
+
+        // When
+        List<Hero> result = heroService.getHeroes(searchTerm);
+
+        // Then
+        assertThat(result).containsExactlyElementsOf(heroes);
+        Mockito.verify(heroRepository).findByNameContainingIgnoreCase(searchTerm);
     }
 }
