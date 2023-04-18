@@ -45,6 +45,6 @@ public class HeroService {
                     heroRepository.delete(hero);
                     return hero;
                 })
-                .orElseThrow(() -> new RuntimeException("Not Found"));
+                .orElseThrow(() -> new NotFoundException(Problems.HERO_NOT_FOUND));
     }
 }
