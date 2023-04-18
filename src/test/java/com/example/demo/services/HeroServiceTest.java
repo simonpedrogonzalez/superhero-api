@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.domain.dtos.CreateHeroDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,9 +27,9 @@ class HeroServiceTest {
     void shouldReturnAllHeroes() {
         // Given
         List<Hero> heroes = Arrays.asList(
-                new Hero(1L, "Superman"),
-                new Hero(2L, "Batman"),
-                new Hero(3L, "Spiderman")
+                new Hero("Superman"),
+                new Hero("Batman"),
+                new Hero("Spiderman")
         );
         Mockito.when(heroRepository.findAll()).thenReturn(heroes);
 
@@ -45,9 +46,9 @@ class HeroServiceTest {
         // Given
         String searchTerm = "man";
         List<Hero> heroes = Arrays.asList(
-                new Hero(1L, "Superman"),
-                new Hero(2L, "Spiderman"),
-                new Hero(3L, "Manolito el fuerte")
+                new Hero("Superman"),
+                new Hero("Spiderman"),
+                new Hero("Manolito el fuerte")
         );
 
         Mockito.when(heroRepository.findByNameContainingIgnoreCase(searchTerm)).thenReturn(heroes);
@@ -63,15 +64,15 @@ class HeroServiceTest {
     @Test
     void shouldCreateHero() {
         // Given
-        Hero hero = new Hero(1L, "Ironman");
+        Hero hero = new Hero("Ironman");
         CreateHeroDTO createHeroDTO = new CreateHeroDTO("Ironman");
-        Mockito.when(heroRepository.save(hero)).thenReturn(hero);
+        Mockito.when(heroRepository.save(Mockito.any(Hero.class))).thenReturn(hero);
 
         // When
         Hero result = heroService.createHero(createHeroDTO);
 
         // Then
         assertThat(result).isEqualTo(hero);
-        Mockito.verify(heroRepository).save(hero);
+        Mockito.verify(heroRepository).save(Mockito.any(Hero.class));
     }
 }

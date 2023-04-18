@@ -7,8 +7,8 @@ CREATE TABLE heroes (
     CONSTRAINT heroesPK PRIMARY KEY (id)
 );
 
-INSERT INTO `heroes` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Superman', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'Spiderman', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 'Manolito el fuerte', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 'Linterna Verde', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO `heroes` (`name`, `created_at`, `updated_at`) VALUES
+('Superman', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Spiderman', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Manolito el fuerte', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('Linterna Verde', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

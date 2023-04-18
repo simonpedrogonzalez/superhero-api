@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
+import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.services.HeroService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -22,5 +24,10 @@ public class HeroController {
     public ResponseEntity<List<Hero>> getHeroes(
             @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
         return new ResponseEntity<>(heroService.getHeroes(searchTerm), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Hero> createHero(@RequestBody @Valid CreateHeroDTO createHeroDTO) {
+        return new ResponseEntity<>(heroService.createHero(createHeroDTO), HttpStatus.CREATED);
     }
 }

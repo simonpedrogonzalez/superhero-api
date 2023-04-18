@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.domain.repositories.HeroRepository;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,9 @@ public class HeroService {
         return searchTerm
                 .map((q) -> heroRepository.findByNameContainingIgnoreCase(q))
                 .orElseGet(() -> heroRepository.findAll());
+    }
+
+    public Hero createHero(CreateHeroDTO createHeroDTO) {
+        return heroRepository.save(new Hero(createHeroDTO.getName()));
     }
 }
