@@ -75,4 +75,23 @@ class HeroServiceTest {
         assertThat(result).isEqualTo(hero);
         Mockito.verify(heroRepository).save(Mockito.any(Hero.class));
     }
+
+    @Test
+    void shouldUpdateHero() {
+        // Given
+        Long heroId = 1L;
+        Hero existingHero = new Hero(heroId, "Ironman");
+        UpdateHeroDTO updateHeroDTO = new UpdateHeroDTO("Tony Stark");
+        Mockito.when(heroRepository.findById(heroId)).thenReturn(Optional.of(existingHero));
+        Mockito.when(heroRepository.save(Mockito.any(Hero.class))).thenReturn(existingHero);
+
+        // When
+        Hero result = heroService.updateHero(heroId, updateHeroDTO);
+
+        // Then
+        assertThat(result).isEqualTo(existingHero);
+        assertThat(result.getName()).isEqualTo("Tony Stark");
+        Mockito.verify(heroRepository).findById(heroId);
+        Mockito.verify(heroRepository).save(Mockito.any(Hero.class));
+    }
 }
