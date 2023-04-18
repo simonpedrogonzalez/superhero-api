@@ -41,4 +41,9 @@ public class HeroController {
     public ResponseEntity<Hero> deleteHero(@PathVariable Long heroId) {
         return new ResponseEntity<>(heroService.deleteHero(heroId), HttpStatus.OK);
     }
+
+    @GetMapping("/{heroId}")
+    public ResponseEntity<Hero> getHero(@PathVariable Long heroId) {
+        return new ResponseEntity<>(heroService.getHero(heroId), HttpStatus.OK);
+    }
 }

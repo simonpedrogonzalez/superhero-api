@@ -149,4 +149,15 @@ class HeroServiceTest {
         assertThat(result).isEqualTo(hero);
         Mockito.verify(heroRepository).findById(heroId);
     }
+
+    @Test
+    void shouldThrowHeroNotFoundExceptionOnGetOne() {
+        // Given
+        Long heroId = 1L;
+        Mockito.when(heroRepository.findById(heroId)).thenReturn(Optional.empty());
+
+        // When/Then
+        assertThrows(NotFoundException.class, () -> heroService.getHero(heroId));
+        Mockito.verify(heroRepository).findById(heroId);
+    }
 }

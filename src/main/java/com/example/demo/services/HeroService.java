@@ -47,4 +47,9 @@ public class HeroService {
                 })
                 .orElseThrow(() -> new NotFoundException(Problems.HERO_NOT_FOUND));
     }
+
+    public Hero getHero(Long heroId) {
+        return heroRepository.findById(heroId)
+                .orElseThrow(() -> new NotFoundException(Problems.HERO_NOT_FOUND));
+    }
 }
