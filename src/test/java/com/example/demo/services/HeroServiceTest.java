@@ -135,4 +135,18 @@ class HeroServiceTest {
         Mockito.verify(heroRepository).findById(Mockito.anyLong());
     }
 
+    @Test
+    void shouldReturnOneHero() {
+        // Given
+        Long heroId = 1L;
+        Hero hero = new Hero(heroId, "Ironman");
+        Mockito.when(heroRepository.findById(heroId)).thenReturn(Optional.of(hero));
+
+        // When
+        Hero result = heroService.getHero(heroId);
+
+        // Then
+        assertThat(result).isEqualTo(hero);
+        Mockito.verify(heroRepository).findById(heroId);
+    }
 }
