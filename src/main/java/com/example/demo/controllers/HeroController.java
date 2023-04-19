@@ -7,9 +7,11 @@ import com.example.demo.services.HeroService;
 import com.example.demo.utils.TimedAPICall;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,9 @@ public class HeroController {
 
     @Autowired
     private HeroService heroService;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @TimedAPICall
     @GetMapping
