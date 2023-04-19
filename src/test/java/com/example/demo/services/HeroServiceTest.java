@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.dtos.UpdateHeroDTO;
 import com.example.demo.exceptions.NotFoundException;
+import com.example.demo.utils.ContentResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -37,10 +38,10 @@ class HeroServiceTest {
         Mockito.when(heroRepository.findAll()).thenReturn(heroes);
 
         // When
-        List<Hero> result = heroService.getHeroes(Optional.empty());
+        ContentResponse result = heroService.getHeroes(Optional.empty());
 
         // Then
-        assertThat(result).containsExactlyElementsOf(heroes);
+        assertThat(result.getContent()).containsExactlyElementsOf(heroes);
         Mockito.verify(heroRepository).findAll();
     }
 
