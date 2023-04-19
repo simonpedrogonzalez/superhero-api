@@ -1,0 +1,12 @@
+version: "3.3"
+
+services:
+  superhero-api:
+    build: .
+    environment:
+      PORT: 8888
+      DB_URL:
+      DB_USERNAME:
+      DB_PASSWORD:
+    ports:
+      - "8888:8888"
