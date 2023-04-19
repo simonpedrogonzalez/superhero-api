@@ -45,6 +45,7 @@ public class GlobalHandler {
     }
 
     private void logException(APIExceptionResponse apiExceptionResponse) {
+        log.error("Exception caught:");
         log.error("Status: " + apiExceptionResponse.getStatus());
         log.error("Title: " + apiExceptionResponse.getTitle());
         log.error("Message: " + apiExceptionResponse.getMessage());
