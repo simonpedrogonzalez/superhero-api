@@ -38,7 +38,7 @@ class HeroServiceTest {
         Mockito.when(heroRepository.findAll()).thenReturn(heroes);
 
         // When
-        ContentResponse result = heroService.getHeroes(Optional.empty());
+        ContentResponse<Hero> result = heroService.getHeroes(Optional.empty());
 
         // Then
         assertThat(result.getContent()).containsExactlyElementsOf(heroes);
@@ -58,10 +58,10 @@ class HeroServiceTest {
         Mockito.when(heroRepository.findByNameContainingIgnoreCase(searchTerm)).thenReturn(heroes);
 
         // When
-        List<Hero> result = heroService.getHeroes(Optional.of(searchTerm));
+        ContentResponse<Hero> result = heroService.getHeroes(Optional.of(searchTerm));
 
         // Then
-        assertThat(result).containsExactlyElementsOf(heroes);
+        assertThat(result.getContent()).containsExactlyElementsOf(heroes);
         Mockito.verify(heroRepository).findByNameContainingIgnoreCase(searchTerm);
     }
 

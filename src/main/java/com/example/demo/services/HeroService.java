@@ -7,6 +7,7 @@ import com.example.demo.domain.entities.Hero;
 import com.example.demo.domain.repositories.HeroRepository;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.exceptions.models.Problems;
+import com.example.demo.utils.ContentResponse;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,10 +28,12 @@ public class HeroService {
 
 
     @Cacheable(cacheNames = CacheNames.HEROES_SEARCHES, key = "#searchTerm.orElse('all')")
-    public List<Hero> getHeroes(Optional<String> searchTerm) {
-        return searchTerm
-                .map((q) -> heroRepository.findByNameContainingIgnoreCase(q))
-                .orElseGet(() -> heroRepository.findAll());
+    public ContentResponse<Hero> getHeroes(Optional<String> searchTerm) {
+        return ContentResponse.<Hero>builder()
+                .content(searchTerm
+                        .map((q) -> heroRepository.findByNameContainingIgnoreCase(q))
+                        .orElseGet(() -> heroRepository.findAll()))
+                .build();
     }
 
     @Caching(

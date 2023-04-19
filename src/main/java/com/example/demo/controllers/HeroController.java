@@ -4,6 +4,7 @@ import com.example.demo.domain.dtos.CreateHeroDTO;
 import com.example.demo.domain.dtos.UpdateHeroDTO;
 import com.example.demo.domain.entities.Hero;
 import com.example.demo.services.HeroService;
+import com.example.demo.utils.ContentResponse;
 import com.example.demo.utils.TimedAPICall;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class HeroController {
 
     @TimedAPICall
     @GetMapping
-    public ResponseEntity<List<Hero>> getHeroes(
+    public ResponseEntity<ContentResponse<Hero>> getHeroes(
             @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
         return new ResponseEntity<>(heroService.getHeroes(searchTerm), HttpStatus.OK);
     }
