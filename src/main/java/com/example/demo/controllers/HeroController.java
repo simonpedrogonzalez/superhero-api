@@ -8,35 +8,32 @@ import com.example.demo.utils.ContentResponse;
 import com.example.demo.utils.TimedAPICall;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Validated
 @RequestMapping("/heroes")
 public class HeroController {
 
     @Autowired
     private HeroService heroService;
 
-    @Autowired
-    private CacheManager cacheManager;
-
     @TimedAPICall
     @GetMapping
     public ResponseEntity<ContentResponse<Hero>> getHeroes(
-            @RequestParam(value = "searchTerm", required = false) Optional<String> searchTerm) {
-        return new ResponseEntity<>(heroService.getHeroes(searchTerm), HttpStatus.OK);
+            @RequestParam(value = "name", required = false) Optional<String> name) {
+        return new ResponseEntity<>(heroService.getHeroes(name), HttpStatus.OK);
     }
 
     @TimedAPICall
     @PostMapping
-    public ResponseEntity<Hero> createHero(@RequestBody @Valid CreateHeroDTO createHeroDTO) {
+    public ResponseEntity<Hero> createHero(@Valid @RequestBody CreateHeroDTO createHeroDTO) {
         return new ResponseEntity<>(heroService.createHero(createHeroDTO), HttpStatus.CREATED);
     }
 

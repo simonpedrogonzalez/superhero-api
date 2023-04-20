@@ -27,18 +27,18 @@ public class HeroService {
     }
 
 
-    @Cacheable(cacheNames = CacheNames.HEROES_SEARCHES, key = "#searchTerm.orElse('all')")
-    public ContentResponse<Hero> getHeroes(Optional<String> searchTerm) {
+    @Cacheable(cacheNames = CacheNames.HEROES_SEARCHES, key = "#name.orElse('all')")
+    public ContentResponse<Hero> getHeroes(Optional<String> name) {
+        List<Hero> heroes = name.map(q -> heroRepository.findByNameContainingIgnoreCase(q))
+                .orElse(heroRepository.findAll());
         return ContentResponse.<Hero>builder()
-                .content(searchTerm
-                        .map((q) -> heroRepository.findByNameContainingIgnoreCase(q))
-                        .orElseGet(() -> heroRepository.findAll()))
+                .content(heroes)
                 .build();
     }
 
     @Caching(
             evict = {@CacheEvict(value = CacheNames.HEROES_SEARCHES, allEntries = true)},
-            put = {@CachePut(value = CacheNames.HEROES_BY_ID, key = "#result.getBody().getId()")}
+            put = {@CachePut(value = CacheNames.HEROES_BY_ID, key = "#result.getId()")}
     )
     public Hero createHero(CreateHeroDTO createHeroDTO) {
         return heroRepository.save(new Hero(createHeroDTO.getName()));
